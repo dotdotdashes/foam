@@ -7,6 +7,7 @@ Serial ser;
 int NUM_ROWS = 3;
 int NUM_COLS = 3;
 int[][] matrix = new int[NUM_COLS][NUM_ROWS];
+byte[] data = {};
 
 void setup () {
   size(500, 500, P3D);
@@ -22,12 +23,19 @@ void setup () {
   background(0);
 }
 
+// save buffer to file on keypress
+//void keyPressed() {
+//  saveBytes("matrixData", data);
+//  exit();
+//}
 
 void draw() {
-  //background(0);
+  background(0);
   while (ser.available() > 0) {
     byte[] inBuffer = ser.readBytesUntil(byte(0));
     if (inBuffer == null) continue;
+    
+    data = concat(data, inBuffer);
 
     for (int row=0; row<NUM_ROWS; row++) {
       for (int col=0; col<NUM_COLS; col++) {
@@ -46,6 +54,7 @@ void printMatrix() {
   translate(width/NUM_COLS, height/NUM_ROWS);
   rotateX(PI/4);
   scale(0.5);
+  textSize(50);
   background(0);
   for (int row=0; row<NUM_ROWS; row++) {
       for (int col=0; col<NUM_COLS; col++) {
@@ -58,7 +67,8 @@ void printMatrix() {
         //}
         //fill(255-val,255-val, 255-val);
         //circle(width*((float)col/NUM_COLS), height*((float)row/NUM_ROWS), (200-val)/2);
-        circle(width*((float)col/NUM_COLS), height*((float)row/NUM_ROWS), val);
+        text(val, width*((float)col/NUM_COLS), height*((float)row/NUM_ROWS));
+        //circle(width*((float)col/NUM_COLS), height*((float)row/NUM_ROWS), val);
       }
     }
 }
