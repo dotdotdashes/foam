@@ -6,7 +6,7 @@ void setup () {
   // Print each value, from 0 to 255 
   for (int i = 0; i < b.length; i++) { 
     // Every tenth number, start a new line 
-    if ((i % 10) == 0) { 
+    if (b[i] == 0) { 
       println(); 
     } 
     // bytes are from -128 to 127, this converts to 0 to 255 
