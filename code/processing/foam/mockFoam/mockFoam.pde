@@ -9,18 +9,6 @@ byte byteFile[];
 void setup () {
   // Open a file and read its binary data 
   byteFile = loadBytes("matrixData");
-  // Print each value, from 0 to 255 
-  for (int i = 0; i < byteFile.length; i++) { 
-    // Every tenth number, start a new line 
-    if (byteFile[i] == 0) { 
-      println(); 
-    } 
-    // bytes are from -128 to 127, this converts to 0 to 255 
-    int a = byteFile[i] & 0xff; 
-    print(a + " "); 
-  } 
-  // Print a blank line at the end 
-  println(); 
   
   // Set up graphical display
   size(500, 500, P3D);
@@ -36,6 +24,7 @@ void setup () {
   background(0);
 }
 
+// Fills a matrix and displays it
 void draw() {
   background(0);
   if (index < byteFile.length) {
@@ -53,6 +42,7 @@ void draw() {
   }
 }
 
+// Renders the byte file graphically
 void display() {
   translate(width/NUM_COLS, height/NUM_ROWS);
   rotateX(PI/4);
@@ -66,4 +56,20 @@ void display() {
       circle(width*((float)col/NUM_COLS), height*((float)row/NUM_ROWS), val);
     }
   }
+}
+
+// Prints the byte file contents to the console for debugging
+void printFile() {
+  // Print each value, from 0 to 255 
+  for (int i = 0; i < byteFile.length; i++) { 
+    // Every tenth number, start a new line 
+    if (byteFile[i] == 0) { 
+      println(); 
+    } 
+    // bytes are from -128 to 127, this converts to 0 to 255 
+    int a = byteFile[i] & 0xff; 
+    print(a + " "); 
+  } 
+  // Print a blank line at the end 
+  println(); 
 }
